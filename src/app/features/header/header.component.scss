@@ -40,8 +40,8 @@
   }
 
   &__title {
-    font-family: "RobotoCondensed Bold", "Trebuchet MS", Helvetica, Arial,
-      sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
+    font-weight: 800;
     font-size: clamp(24px, 5vw, 44px);
     text-shadow: 2px 2px 4px rgb(0 0 0 / 50%);
     text-transform: uppercase;
