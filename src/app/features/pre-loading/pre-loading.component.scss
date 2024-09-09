@@ -1,0 +1,141 @@
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: hsl(var(--background) / 95%);
+  transition: 1s;
+  background-image: url("/assets/bg.png");
+  background-size: cover;
+  background-position: center;
+
+  &__header {
+    color: hsl(var(--foreground));
+    font-size: 3rem;
+    max-width: 90svw;
+    width: max-content;
+  }
+
+  &__subheader {
+    color: hsl(var(--foreground));
+    font-size: 1.5rem;
+    max-width: 90svw;
+    width: max-content;
+    margin-bottom: 1rem;
+  }
+
+  &__subheader__logo {
+    opacity: 0;
+    font-weight: 400;
+    width: max-content;
+    max-width: 90svw;
+    text-align: center;
+    color: white;
+
+    &--active {
+      opacity: 1;
+      transition: ease-in-out 0.5s;
+    }
+  }
+
+  &__logo {
+    display: inline-block;
+    opacity: 0;
+    color: white;
+
+    &--active {
+      opacity: 1;
+      transition: ease-in-out 0.5s;
+    }
+
+    &--fade {
+      opacity: 0;
+      transition: ease-in-out 0.5s;
+    }
+  }
+
+  &__button {
+    font-size: 1.2em;
+    padding: 0.5em 1em;
+    margin-bottom: 1em;
+    cursor: pointer;
+    font-family: Bangers, cursive;
+    background: rgb(255 240 33);
+    border: 1px solid black;
+    box-shadow: 2px 2px black;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+
+    &--visible {
+      opacity: 1;
+    }
+
+    &:hover {
+      box-shadow: 4px 4px black;
+    }
+  }
+}
+
+@media (width <= 1024px) {
+  .intro {
+    &__header {
+      font-size: 2.5rem;
+    }
+
+    &__subheader {
+      font-size: 1.25rem;
+    }
+  }
+}
+
+@media (width <= 768px) {
+  .intro {
+    &__header {
+      font-size: 2rem;
+    }
+
+    &__subheader {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (width <= 480px) {
+  .intro {
+    &__header {
+      font-size: 1.5rem;
+    }
+
+    &__subheader {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+@media (width <= 320px) {
+  .intro {
+    &__header {
+      font-size: 1.25rem;
+    }
+
+    &__subheader {
+      font-size: 0.75rem;
+
+      &__logo {
+        transform: translateY(-20%);
+      }
+    }
+
+    &__button {
+      font-size: 1rem;
+      padding: 0.4em 0.8em;
+    }
+  }
+}
