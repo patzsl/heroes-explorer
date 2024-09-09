@@ -1,9 +1,9 @@
 name: Angular Build
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 jobs:
   angular:
     name: Angular Build
@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
-          cache: 'npm'
+          cache: "npm"
           cache-dependency-path: package-lock.json
       - name: Install dependencies
         run: npm ci
