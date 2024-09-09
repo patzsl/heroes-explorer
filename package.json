@@ -9,9 +9,10 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "lint": "ng lint",
-    "lint:fix": "ng lint --fix",
-    "prettier": "npx prettier --write ."
+    "lint": "npx eslint .",
+    "lint:fix": "npx eslint . --fix",
+    "prettier": "npx prettier --write .",
+    "prepare": "husky"
   },
   "private": true,
   "dependencies": {
@@ -34,7 +35,11 @@
     "@types/jest": "^29.5.12",
     "angular-eslint": "18.3.0",
     "eslint": "^9.9.0",
+    "husky": "^9.1.5",
     "jest-preset-angular": "^14.2.2",
+    "lint-staged": "^15.2.10",
+    "stylelint": "^16.9.0",
+    "stylelint-config-standard-scss": "^13.1.0",
     "typescript": "~5.5.2",
     "typescript-eslint": "8.1.0"
   }
