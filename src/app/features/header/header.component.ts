@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
+import { HeroCardComponent } from '@shared/components/hero-card.component';
+import { IHero } from '@shared/models/hero';
+import { heroMock } from 'mocks/hero.mock';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HeroCardComponent],
   template: `
     <div
       class="hero"
@@ -26,6 +29,12 @@ import { Component, ViewEncapsulation } from '@angular/core';
         <p class="hero__subtitle">{{ subtitle }}</p>
       </div>
     </div>
+
+    <div class="container row row-cols-1 row-cols-md-5 g-3 mx-auto">
+      @for (hero of heroes; track hero.id) {
+        <app-hero-card [hero]="hero"></app-hero-card>
+      }
+    </div>
   `,
   styleUrls: ['./header.component.scss'],
   encapsulation: ViewEncapsulation.None,
@@ -36,6 +45,8 @@ export class HeaderComponent {
   //   @Input() subtitle: string = '';
 
   imgLoaded = false;
+
+  heroes: IHero[] = heroMock.data.results;
 
   onImageLoad() {
     this.imgLoaded = true;
