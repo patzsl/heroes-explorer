@@ -1,0 +1,5 @@
+{
+  "*.scss": ["stylelint --fix", "npx prettier --write"],
+  "*.{js,ts,jsx,tsx}": ["ng lint --fix", "npx prettier --write"],
+  "!(*.scss|*.js|*.jsx|*.ts|*.tsx)": ["npx prettier --write"]
+}
