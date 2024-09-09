@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
 import { HeroCardComponent } from '@shared/components/hero-card.component';
+import { TitleDirective } from '@shared/directives/title.directive';
 import { IHero } from '@shared/models/hero';
 import { heroMock } from 'mocks/hero.mock';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, HeroCardComponent],
+  imports: [CommonModule, HeroCardComponent, TitleDirective],
   template: `
     <div
       class="hero"
@@ -30,10 +31,13 @@ import { heroMock } from 'mocks/hero.mock';
       </div>
     </div>
 
-    <div class="container row row-cols-1 row-cols-md-5 g-3 mx-auto">
-      @for (hero of heroes; track hero.id) {
-        <app-hero-card [hero]="hero"></app-hero-card>
-      }
+    <div class="container">
+      <h1 app-title class="ms-2">Featured Characters</h1>
+      <div class="row row-cols-1 row-cols-md-5 g-3 mx-auto">
+        @for (hero of heroes; track hero.id) {
+          <app-hero-card [hero]="hero"></app-hero-card>
+        }
+      </div>
     </div>
   `,
   styleUrls: ['./header.component.scss'],

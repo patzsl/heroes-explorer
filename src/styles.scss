@@ -1,5 +1,5 @@
 @import "bootstrap/scss/bootstrap";
-@import "https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Bangers&display=swap";
+@import "https://fonts.googleapis.com/css2?family=Bangers&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap";
 
 * {
   margin: 0;
@@ -22,7 +22,41 @@ h3 {
   letter-spacing: 1px;
 }
 
-a {
-  text-decoration: none; // Remove o sublinhado
-  color: inherit; // Herda a cor do elemento pai
+.decorative-style {
+  position: relative;
+  margin: 48px 0;
+  width: max-content;
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 1.625rem;
+
+  @media (width <= 768px) {
+    font-size: 1.25rem;
+  }
+
+  font-optical-sizing: auto;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  &::before,
+  &::after {
+    background-color: #c6a972;
+    content: "";
+    display: block;
+    height: 2px;
+    position: absolute;
+    transform: rotate(-45deg) skewX(45deg);
+    width: 20px;
+  }
+
+  &::after {
+    left: -6px;
+    top: calc(100% + 3px);
+    transform-origin: right top;
+  }
+
+  &::before {
+    left: 53px;
+    top: -8px;
+    transform-origin: left bottom;
+  }
 }
