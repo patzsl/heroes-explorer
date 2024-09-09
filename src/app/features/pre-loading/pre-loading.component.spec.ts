@@ -90,15 +90,18 @@ describe('PreLoadingComponent', () => {
 
     it('should hide intro', () => {
       jest.useFakeTimers();
-
-      const introElement = { style: {} as CSSStyleDeclaration };
-      component['intro'] = { nativeElement: introElement } as any;
+      const visibleArea = 400;
+      const introElement = fixture.nativeElement.querySelector('.intro');
+      // Forçando um valor para offsetHeight
+      Object.defineProperty(introElement, 'offsetHeight', { value: 568 });
+      const introHeight = introElement.offsetHeight;
+      const topPosition = -(introHeight - visibleArea) + 'px';
       jest.spyOn(component['router'], 'navigate');
 
       component.buttonClick();
       jest.advanceTimersByTime(800);
 
-      expect(introElement.style['top']).toBe('-66vh');
+      expect(topPosition).toBe('-168px');
       expect(component['router'].navigate).toHaveBeenCalledWith(
         ['/characters'],
         { skipLocationChange: true },
