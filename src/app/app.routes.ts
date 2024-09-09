@@ -10,4 +10,12 @@ export const routes: Routes = [
       ),
     data: { animation: 'preLoading' },
   },
+  {
+    path: 'characters',
+    loadComponent: () =>
+      import('./features/header/header.component').then(
+        (c) => c.HeaderComponent,
+      ),
+    data: { animation: 'heroList' },
+  },
 ];
