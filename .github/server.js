@@ -3,7 +3,9 @@ const path = require("path");
 
 const dir = "src/environments";
 const file = "environment.ts";
-const prodFile = "environment.prod.ts"; // For production deployment
+const prodFile = "environment.ts";
+
+console.log("MARVEL_DETAILS:", process.env.MARVEL_DETAILS);
 
 const content = `${process.env.MARVEL_DETAILS}`;
 
@@ -27,7 +29,7 @@ fs.access(dir, fs.constants.F_OK, (err) => {
     if (fs.existsSync(dir + "/" + file)) {
       console.log("File is created", path.resolve(dir + "/" + file));
       const str = fs.readFileSync(dir + "/" + file).toString();
-      console.log(str);
+      console.log(`File Contents: ${str}`);
     }
   } catch (error) {
     console.error(error);
