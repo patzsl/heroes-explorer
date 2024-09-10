@@ -24,5 +24,9 @@ jobs:
         run: npm ci
       - name: Run tests
         run: npm run test
+      - name: Generate environment file
+        env:
+          MARVEL_DETAILS: ${{ secrets.MARVEL_DETAILS }}
+        run: node .github/server.js
       - name: Build
         run: npm run build

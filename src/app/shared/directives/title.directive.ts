@@ -9,10 +9,10 @@ export class TitleDirective {
     private el: ElementRef,
     private renderer: Renderer2,
   ) {
-    this.addHeart();
+    this.addDecorativeStyle();
   }
 
-  private addHeart() {
+  private addDecorativeStyle(): void {
     this.renderer.addClass(this.el.nativeElement, 'decorative-style');
   }
 }
