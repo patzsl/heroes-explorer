@@ -5,8 +5,6 @@ const dir = "src/environments";
 const file = "environment.ts";
 const prodFile = "environment.ts";
 
-console.log("MARVEL_DETAILS:", process.env.MARVEL_DETAILS);
-
 const content = `${process.env.MARVEL_DETAILS}`;
 
 fs.access(dir, fs.constants.F_OK, (err) => {
@@ -28,8 +26,6 @@ fs.access(dir, fs.constants.F_OK, (err) => {
     console.log("Created successfully in", process.cwd());
     if (fs.existsSync(dir + "/" + file)) {
       console.log("File is created", path.resolve(dir + "/" + file));
-      const str = fs.readFileSync(dir + "/" + file).toString();
-      console.log(`File Contents: ${str}`);
     }
   } catch (error) {
     console.error(error);
