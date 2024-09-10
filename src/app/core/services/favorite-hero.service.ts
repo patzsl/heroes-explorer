@@ -1,31 +1,29 @@
 import { Injectable } from '@angular/core';
 import { IHero } from '@shared/models/hero';
-import { BehaviorSubject, fromEvent, Observable, of } from 'rxjs';
-import {
-  distinctUntilChanged,
-  map,
-  startWith,
-  switchMap,
-} from 'rxjs/operators';
+import { Observable, of, ReplaySubject } from 'rxjs';
+import { distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { MarvelService } from './marvel.service';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FavoriteHeroService {
-  private favoriteHeroIdSubject = new BehaviorSubject<number | null>(null);
+  private favoriteHeroIdSubject = new ReplaySubject<number | null>(1);
 
-  constructor(private marvelService: MarvelService) {
+  constructor(
+    private marvelService: MarvelService,
+    private storageService: StorageService,
+  ) {
     this.initFavoriteHeroObservable();
   }
 
   private initFavoriteHeroObservable(): void {
-    fromEvent(window, 'storage')
+    this.storageService
+      .getItem$('selectedHeroId')
       .pipe(
-        startWith(null),
-        map(() => localStorage.getItem('favoriteHeroId')),
         distinctUntilChanged(),
-        map((id) => (id ? Number(id) : null)),
+        switchMap((id) => of(id ? Number(id) : null)),
       )
       .subscribe((id) => this.favoriteHeroIdSubject.next(id));
   }
@@ -36,25 +34,23 @@ export class FavoriteHeroService {
 
   getFavoriteHero(): Observable<IHero | null> {
     return this.getFavoriteHeroId().pipe(
-      switchMap((heroId) => {
-        if (!heroId) {
-          return of(null);
-        }
-        const cachedHero = this.marvelService.getCachedHeroById(heroId);
-        return cachedHero
-          ? of(cachedHero)
-          : this.marvelService.getHeroById(heroId);
-      }),
+      switchMap((heroId) => this.getHeroById(heroId)),
     );
   }
 
   setFavoriteHeroId(heroId: number | null): void {
-    if (heroId === this.favoriteHeroIdSubject.value) {
-      localStorage.removeItem('favoriteHeroId');
-      this.favoriteHeroIdSubject.next(null);
+    if (heroId === null) {
+      this.storageService.removeItem('selectedHeroId');
     } else {
-      localStorage.setItem('favoriteHeroId', heroId?.toString() ?? '');
-      this.favoriteHeroIdSubject.next(heroId);
+      this.storageService.setItem('selectedHeroId', heroId.toString());
     }
+    this.favoriteHeroIdSubject.next(heroId);
+  }
+
+  private getHeroById(heroId: number | null): Observable<IHero | null> {
+    if (!heroId) {
+      return of(null);
+    }
+    return this.marvelService.getHeroById(heroId);
   }
 }
