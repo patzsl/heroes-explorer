@@ -17,8 +17,13 @@ jobs:
       - name: Load & cache dependencies
         run: npm ci
 
+      - name: Generate environment file
+        env:
+          MARVEL_DETAILS: ${{ secrets.MARVEL_DETAILS }}
+        run: node .github/server.js
+
       - name: Test code
-        run: npm run test:coverage
+        run: npm run test
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
