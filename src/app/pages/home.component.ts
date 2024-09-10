@@ -3,11 +3,17 @@ import { MarvelService } from '@core/services/marvel.service';
 import { HeaderComponent } from '@features/header/header.component';
 import { HeroListComponent } from '@features/heroes-list/heroes-list.component';
 import { SearchComponent } from '@features/search.component';
+import { TitleDirective } from '@shared/directives/title.directive';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HeaderComponent, SearchComponent, HeroListComponent],
+  imports: [
+    HeaderComponent,
+    SearchComponent,
+    HeroListComponent,
+    TitleDirective,
+  ],
   template: `
     <app-header
       [imgUrl]="imgUrl"
