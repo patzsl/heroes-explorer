@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { FavoriteHeroService } from '@core/services/favorite-hero.service';
 import { IHero } from '@models/hero';
+import { Subscription } from 'rxjs/internal/Subscription';
 @Component({
   selector: 'app-hero-card',
   imports: [RouterModule, CommonModule],
@@ -13,6 +15,7 @@ import { IHero } from '@models/hero';
             <img
               [src]="hero.thumbnail.path + '.' + hero.thumbnail.extension"
               [alt]="hero.name"
+              class="responsive-img"
             />
           </figure>
         </div>
@@ -27,6 +30,13 @@ import { IHero } from '@models/hero';
           </div>
         </div>
       </a>
+      <button
+        class="favorite-button"
+        (click)="toggleFavorite()"
+        [class.favorite]="isFavorite"
+      >
+        <span class="favorite-icon">{{ isFavorite ? '❤️' : '🤍' }}</span>
+      </button>
     </div>
   `,
   styles: [
@@ -64,6 +74,17 @@ import { IHero } from '@models/hero';
           }
           figure img {
             transform: scale3d(1.05, 1.05, 1);
+          }
+        }
+        .favorite-button {
+          border: none;
+          background: none;
+          font-size: 1.6rem;
+          position: absolute;
+          right: 0;
+          &:hover {
+            cursor: pointer;
+            transform: scale(1.1);
           }
         }
         a.card-link {
@@ -166,6 +187,15 @@ import { IHero } from '@models/hero';
         }
       }
 
+      @media (max-width: 575px) {
+        .card {
+          max-width: 100% !important;
+        }
+        figure.img__wrapper {
+          height: auto !important;
+        }
+      }
+
       @media (min-width: 601px) {
         .card .card-thumb--frame .img__wrapper {
           height: 210px;
@@ -203,6 +233,10 @@ import { IHero } from '@models/hero';
           padding: 0;
           width: 100%;
           height: 100%;
+          &.responsive-img {
+            width: 100%; // Faz a imagem ocupar toda a largura
+            height: auto; // Mantém a proporção da imagem
+          }
           &::after {
             position: absolute;
             content: '';
@@ -218,6 +252,32 @@ import { IHero } from '@models/hero';
   ],
   standalone: true,
 })
-export class HeroCardComponent {
+export class HeroCardComponent implements OnInit, OnDestroy {
   @Input({ required: true }) hero!: IHero;
+  isFavorite = false;
+  private subscription: Subscription | undefined;
+
+  constructor(private favoriteHeroService: FavoriteHeroService) {}
+
+  ngOnInit() {
+    this.subscription = this.favoriteHeroService
+      .getFavoriteHeroId()
+      .subscribe((favoriteHeroId) => {
+        this.isFavorite = favoriteHeroId === this.hero.id;
+      });
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  toggleFavorite(): void {
+    if (this.isFavorite) {
+      this.favoriteHeroService.setFavoriteHeroId(null);
+    } else {
+      this.favoriteHeroService.setFavoriteHeroId(this.hero.id);
+    }
+  }
 }

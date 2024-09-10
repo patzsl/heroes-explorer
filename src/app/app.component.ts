@@ -35,7 +35,7 @@ import { RouterOutlet } from '@angular/router';
   ],
 })
 export class AppComponent {
-  prepareRoute(outlet: RouterOutlet) {
+  prepareRoute(outlet: RouterOutlet): string | undefined {
     return (
       outlet &&
       outlet.activatedRouteData &&
