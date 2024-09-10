@@ -3,11 +3,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   HostListener,
-  OnDestroy,
-  OnInit,
 } from '@angular/core';
 import { IHero } from '@shared/models/hero';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { FavoriteHeroService } from '../../core/services/favorite-hero.service';
 
@@ -157,26 +155,15 @@ import { FavoriteHeroService } from '../../core/services/favorite-hero.service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FavoriteHeroComponent implements OnInit, OnDestroy {
+export class FavoriteHeroComponent {
   favoriteHero$: Observable<IHero | null>;
   isExpanded = false;
   isClicked = false;
-  private subscription: Subscription = new Subscription();
 
   constructor(private favoriteHeroService: FavoriteHeroService) {
     this.favoriteHero$ = this.favoriteHeroService
       .getFavoriteHeroId()
       .pipe(switchMap(() => this.favoriteHeroService.getFavoriteHero()));
-  }
-
-  ngOnInit() {
-    this.subscription = this.favoriteHero$.subscribe();
-  }
-
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 
   expand() {

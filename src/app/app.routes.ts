@@ -13,9 +13,7 @@ export const routes: Routes = [
   {
     path: 'characters',
     loadComponent: () =>
-      import('./features/header/header.component').then(
-        (c) => c.HeaderComponent,
-      ),
+      import('./pages/home.component').then((c) => c.HomeComponent),
     data: { animation: 'heroList' },
   },
 ];
