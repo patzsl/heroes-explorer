@@ -25,6 +25,6 @@ jobs:
       - name: Run tests
         run: npm run test
       - name: Generate environment file
-        run: node .github/workflows/server.js
+        run: node .github/server.js
       - name: Build
         run: npm run build
