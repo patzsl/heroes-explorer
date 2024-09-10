@@ -14,6 +14,10 @@ jobs:
           cache-dependency-path: package-lock.json
       - name: Install dependencies
         run: npm ci
+      - name: Generate environment file
+        env:
+          MARVEL_DETAILS: ${{ secrets.MARVEL_DETAILS }}
+        run: node .github/server.js
       - name: Run tests
         run: npm run test
   build:
