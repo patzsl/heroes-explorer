@@ -1,6 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MarvelService } from '@core/services/marvel.service';
+import { PaginationComponent } from '@features/pagination.component';
 
 import { HeroCardComponent } from '@shared/components/hero-card.component';
 import { IHero } from '@shared/models/hero';
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-hero-list',
-  imports: [AsyncPipe, HeroCardComponent],
+  imports: [AsyncPipe, HeroCardComponent, PaginationComponent],
   template: `
     <div
       class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3 mx-auto mb-5"
@@ -17,6 +18,11 @@ import { Observable } from 'rxjs';
         <app-hero-card [hero]="hero"></app-hero-card>
       }
     </div>
+    <app-pagination
+      [currentPage]="(currentPage$ | async) ?? 1"
+      [totalPages]="(totalPages$ | async) ?? 1"
+      (pageChange)="onPageChange($event)"
+    ></app-pagination>
   `,
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
