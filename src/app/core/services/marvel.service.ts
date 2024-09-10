@@ -116,7 +116,7 @@ export class MarvelService {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: Error): Observable<T> => {
-      console.error(`${operation} falhou: ${error.message}`);
+      console.error(`${operation} falhou: ${error.message}`); //eslint-disable-line
       return of(result as T);
     };
   }
