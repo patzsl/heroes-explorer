@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FavoriteHeroService } from '@core/services/favorite-hero.service';
 import { IHero } from '@models/hero';
@@ -259,7 +259,7 @@ export class HeroCardComponent implements OnInit, OnDestroy {
 
   constructor(private favoriteHeroService: FavoriteHeroService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.subscription = this.favoriteHeroService
       .getFavoriteHeroId()
       .subscribe((favoriteHeroId) => {
@@ -267,7 +267,7 @@ export class HeroCardComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

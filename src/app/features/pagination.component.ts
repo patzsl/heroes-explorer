@@ -96,7 +96,7 @@ export class PaginationComponent {
     return range;
   }
 
-  onPageClick(page: number | string) {
+  onPageClick(page: number | string): void {
     const numPage = typeof page === 'string' ? parseInt(page, 10) : page;
     if (
       numPage >= 1 &&
