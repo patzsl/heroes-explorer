@@ -15,9 +15,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       @for (page of visiblePages; track page) {
         <button
           [class.active]="page === currentPage"
-          (click)="onPageClick(+page)"
+          (click)="onPageClick(page)"
           class="pagination-button"
           [attr.aria-current]="page === currentPage ? 'page' : null"
+          [disabled]="page === currentPage"
         >
           {{ page }}
         </button>
@@ -56,11 +57,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
         background-color: #e62429;
         color: white;
       }
-      .pagination-button.active {
+      .pagination-button.active,
+      .pagination-button:disabled {
         background-color: #e62429;
         color: white;
-      }
-      .pagination-button:disabled {
         opacity: 0.5;
         cursor: not-allowed;
       }
@@ -98,7 +98,11 @@ export class PaginationComponent {
 
   onPageClick(page: number | string) {
     const numPage = typeof page === 'string' ? parseInt(page, 10) : page;
-    if (numPage >= 1 && numPage <= this.totalPages) {
+    if (
+      numPage >= 1 &&
+      numPage <= this.totalPages &&
+      numPage !== this.currentPage
+    ) {
       this.pageChange.emit(numPage);
     }
   }
