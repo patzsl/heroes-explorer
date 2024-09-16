@@ -78,7 +78,7 @@ export class SearchComponent implements OnInit {
   @Output() search = new EventEmitter<string>();
   searchTerm = new FormControl('');
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.searchTerm.valueChanges
       .pipe(
         debounceTime(300),
@@ -92,7 +92,7 @@ export class SearchComponent implements OnInit {
       });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.searchTerm.value !== null) {
       this.search.emit(this.searchTerm.value);
     }

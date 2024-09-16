@@ -6,7 +6,7 @@ import {
   flush,
   tick,
 } from '@angular/core/testing';
-import { PreLoadingComponent } from './pre-loading.component';
+import { PreLoadingComponent } from '../../../src/app/features/pre-loading/pre-loading.component';
 
 describe('PreLoadingComponent', () => {
   let component: PreLoadingComponent;

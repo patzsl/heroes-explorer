@@ -166,24 +166,24 @@ export class FavoriteHeroComponent {
       .pipe(switchMap(() => this.favoriteHeroService.getFavoriteHero()));
   }
 
-  expand() {
+  expand(): void {
     this.isExpanded = true;
   }
 
-  collapseIfNotClicked() {
+  collapseIfNotClicked(): void {
     if (!this.isClicked) {
       this.isExpanded = false;
     }
   }
 
-  toggleExpand(event: MouseEvent) {
+  toggleExpand(event: MouseEvent): void {
     event.stopPropagation();
     this.isClicked = !this.isClicked;
     this.isExpanded = this.isClicked;
   }
 
   @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
+  onDocumentClick(event: MouseEvent): void {
     const favoriteHeroElement = (event.target as HTMLElement).closest(
       '.favorite-hero-container',
     );
